@@ -4,7 +4,7 @@ project( RuntimeCompiledCPlusPlus )
 #
 # Options
 #
-option(BUILD_EXAMPLES "Build example applications" ON)
+option(BUILD_EXAMPLES "Build example applications" OFF)
 option(GLFW_SYSTEM    "Use the operating system glfw library" OFF)
 
 if(UNIX AND NOT APPLE)
@@ -22,11 +22,13 @@ include(cmake/ProjectFiles.cmake)
 # RuntimeCompiler
 #
 add_library(RuntimeCompiler ${BUILD_TYPE} ${RuntimeCompiler_SRCS})
+target_include_directories(RuntimeCompiler PUBLIC ".")
 
 #
 # RuntimeObjectSystem
 #
 add_library(RuntimeObjectSystem ${BUILD_TYPE} ${RuntimeObjectSystem_SRCS})
+target_include_directories(RuntimeObjectSystem PUBLIC ".")
 target_link_libraries(RuntimeObjectSystem RuntimeCompiler)
 if(UNIX)
 	target_link_libraries(RuntimeObjectSystem dl)
